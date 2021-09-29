@@ -1,8 +1,8 @@
-$role = 'GOC_Power_Users'
-$domain = 'roc.cor'
-$group = 'ROC.COR\'
-$datacenter = 'Gameroom'
-$cluster = 'Cybertron'
+$role = 'role'
+$domain = 'vsphere.local'
+$group = 'vsphere.local\'
+$datacenter = 'datacenter'
+$cluster = 'cluster'
 
 $users = (Get-VIAccount -Domain $domain).name.Replace($group,'')
 

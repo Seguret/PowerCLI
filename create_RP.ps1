@@ -1,7 +1,7 @@
-$role = 'GOC_Power_Users'
-$domain = 'roc.cor'
-$group = 'ROC.COR\'
-$cluster = 'Cybertron'
+$role = 'role'
+$domain = 'vsphere.local'
+$group = 'vsphere.local\'
+$cluster = 'cluster'
 
 $memReservation = $true
 $memReservationGB = 64

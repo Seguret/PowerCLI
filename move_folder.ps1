@@ -1,5 +1,5 @@
-$folder_vcsa = 'Cristaldi'
-$resourcepool = 'a.cristaldi'
+$folder_vcsa = 'name_folder'
+$resourcepool = 'name_resoucer_pool'
 
 $vm = (Get-Folder -Name $folder_vcsa | Get-VM)
 

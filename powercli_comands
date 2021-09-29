@@ -8,7 +8,7 @@ install-module -name VMware.PowerCLI
 Set-PowerCLIConfiguration -InvalidCertificateAction Ignore
 
 # CONNECTION WITH VCSA
-Connect-VIServer -server vcsa-gr.cioc.local -user t1.admin4@roc.cor -pass password
+Connect-VIServer -server vcsa-gr.cioc.local -user <admin> -pass <password>
 
 # CLUSTERS
 Set-Variable -Name 'name_cluster' -Value (Get-Cluster | Select-Object -Property Name)
@@ -16,43 +16,43 @@ $name_cluster
 
 
 # USERS
-Set-Variable -Name 'users' -Value (Get-VIAccount -Domain roc.cor).name.Replace('ROC.COR\','')
+Set-Variable -Name 'users' -Value (Get-VIAccount -Domain <domain>).name.Replace('<string>','')
 $users
 
 # GROUPS
-Set-Variable -Name 'groups' -Value (Get-VIAccount -Group -Domain roc.cor).name.Replace('ROC.COR\co_','').Replace('goc_','')
+Set-Variable -Name 'groups' -Value (Get-VIAccount -Group -Domain <domain>).name.Replace('<String>','').Replace('<string>','')
 $groups
 
 # CONNECTION WITH SSOADMIN MODULE
-Connect-SsoAdminServer -Server vcsa-gr.cioc.local -User t1.admin4@roc.cor -Password password -SkipCertificateCheck
+Connect-SsoAdminServer -Server <vcsa> -User <admin> -Password <password> -SkipCertificateCheck
 
 
 # PERMISSION RESOURCE POOL
-Get-ResourcePool -Name RSA | Get-VIPermission
+Get-ResourcePool -Name <resourcepool> | Get-VIPermission
 
 # CREATE A NEW PERMISSION
-$permission = New-VIPermission -Role GOC_Power_Users -Principal ROC.COR\m.dimaio -Entity (Get-ResourcePool -Name RSA)
+$permission = New-VIPermission -Role <role> -Principal <name> -Entity (Get-ResourcePool -Name <name>)
 
 # CREATE A NEW RESOURCEPOOL
-New-ResourcePool -Location _RSA_Cluster -Name RSA_dev
+New-ResourcePool -Location <name_cluster> -Name <name>
 
 # SEARCH FOLDER
-$fold = (Get-Folder -Name susanna | Get-Folder)
+$fold = (Get-Folder -Name <name_folder> | Get-Folder)
 
 # GET VM FROM HOST
-Get-VM -Location esxidev06.roc.cor, esxidev05.roc.cor, esxigr2.cioc.local, esxigr4.cioc.local
+Get-VM -Location <HOST>
 
 #STOP VM
-Get-VM -Name Kali_ADSL | Stop-VM -Confirm:$false
+Get-VM -Name <Name_VM> | Stop-VM -Confirm:$false
 
 #STOP ALL VM
-Stop-VM  -VM (Get-VM -Location esxidev06.roc.cor, esxidev05.roc.cor, esxigr2.cioc.local, esxigr4.cioc.local) -Confirm:$false
+Stop-VM  -VM (Get-VM -Location <HOST>) -Confirm:$false
 
 # GET DATASTORE
-Get-Datastore -Name DEV07-SAS
+Get-Datastore -Name <STORE>
 
-$dest = Get-VMHost esxidev07.roc.cor
-$vm = Get-VM -Name Kali_ADSL 
-$destDatastore = Get-Datastore -Name DEV07-SAS
+$dest = Get-VMHost <HOST>
+$vm = Get-VM -Name <name_VM> 
+$destDatastore = Get-Datastore -Name <Store>
 
 $vm | Move-VM -Destination $dest -Datastore $destDatastore
